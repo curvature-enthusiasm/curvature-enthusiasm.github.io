@@ -1,5 +1,676 @@
+<!DOCTYPE html>
 <html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Curvature Enthusiasm: Correspondence-Free Interpolation and Matching of Articulated 3D Shapes using Compressed Normal Cycles">
+  <meta name="keywords" content="Siggraph Asia, 3D Matching, Normal Cycles, Neural ODE, Shape Interpolation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Curvature Enthusiasm (Siggraph Asia 2025)</title>
 
-  <h1>Curvature Enthusiasm Landing Page</h1>
-  
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="./static/css/academicons.min.css">
+
+  <style>
+    body {
+      font-family: 'Noto Sans', sans-serif;
+      background-color: #ffffff;
+    }
+    
+    /* Typography */
+    .title.is-1 { 
+      font-family: 'Google Sans', sans-serif; 
+      font-weight: 700; 
+      font-size: 2.5rem;
+      margin-bottom: 5px; 
+    }
+    
+    .section-title {
+      font-family: 'Google Sans', sans-serif;
+      font-weight: 600;
+      color: #363636;
+      margin-bottom: 1.5rem;
+    }
+
+    .subtitle {
+        font-family: 'Google Sans', sans-serif;
+        color: #4a4a4a;
+    }
+
+    /* Author Block */
+    .publication-title {
+        margin-bottom: 5px;
+    }
+    
+    .publication-authors {
+      font-family: 'Google Sans', sans-serif;
+      font-size: 1.2rem;
+      margin-bottom: 5px; 
+    }
+    
+    .author-block {
+      display: inline-block;
+      margin-right: 15px;
+    }
+    
+    .author-block a {
+        color: #3273dc;
+        font-weight: 600;
+    }
+
+    .institution {
+        font-size: 1rem;
+        color: #666;
+        margin-top: 2px; 
+        margin-bottom: 2px;
+        display: block;
+    }
+
+    .publication-venue {
+        color: #333;
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin-top: 5px;
+        margin-bottom: 15px;
+    }
+
+    /* Buttons */
+    .link-block a {
+      margin: 5px;
+      padding-left: 15px;
+      padding-right: 15px;
+      border-radius: 24px;
+      transition: all 0.2s ease-in-out;
+    }
+    
+    .link-block a:hover {
+        background-color: #363636;
+        color: #fff;
+        border-color: #363636;
+    }
+
+    /* Images & Captions */
+    .teaser-image, .result-image {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 10px;
+      background-color: #f5f5f5; 
+      min-height: 200px;
+      object-fit: contain;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .caption {
+      font-size: 0.95rem;
+      color: #4a4a4a;
+      font-style: italic;
+      text-align: center;
+      margin-top: 10px;
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+
+    /* Video Embed (General) */
+    video {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        margin-bottom: 0px;
+    }
+
+    /* Abstract */
+    .abstract-container {
+        background-color: #f5f5f5;
+        padding: 1.5rem 2rem; 
+        border-radius: 10px;
+        margin-bottom: 2rem;
+    }
+
+    /* Math & Code */
+    .math-block { 
+        background: #fdfdfd; 
+        padding: 15px; 
+        border: 1px solid #eee;
+        border-radius: 5px; 
+        font-family: 'Courier New', monospace; 
+        font-size: 0.9em; 
+        overflow-x: auto; 
+    }
+
+    .bibtex-section {
+        background-color: #f5f5f5;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: left;
+    }
+    
+    pre {
+        background-color: transparent;
+        padding: 0;
+        font-size: 0.85rem;
+    }
+
+    /* Footer */
+    .footer {
+        background-color: #fafafa;
+        padding: 3rem 1.5rem;
+        margin-top: 3rem;
+    }
+    
+    /* Layout utilities */
+    .content-block {
+        margin-bottom: 3rem;
+    }
+    
+    .vertical-center {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    /* Spacing Overrides */
+    .hero-body {
+        padding-bottom: 0.5rem; 
+        padding-top: 2rem;
+    }
+    
+    .compact-section {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    /* Image Placeholder Fallback Style */
+    .img-placeholder {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #e8e8e8;
+        color: #888;
+        font-weight: bold;
+        border: 2px dashed #ccc;
+        border-radius: 8px;
+        min-height: 250px;
+        width: 100%;
+        margin-bottom: 10px;
+        text-align: center;
+        padding: 20px;
+        flex-direction: column;
+    }
+    
+    .logo-placeholder {
+        min-height: 80px;
+        border: 1px dashed #ccc;
+        background-color: #f9f9f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        color: #999;
+        font-size: 0.8rem;
+    }
+
+    /* Carousel Customization */
+    .results-carousel {
+        overflow: hidden;
+    }
+    .results-carousel .item {
+        margin: 0; 
+        padding: 0 10px; 
+    }
+    
+    /* UPDATED: Apply styles to both img and video in carousel */
+    .results-carousel .item img,
+    .results-carousel .item video {
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        width: 100%;
+        object-fit: cover;
+        display: block;
+    }
+    
+    .carousel-item-caption {
+        text-align: center;
+        margin-top: 10px;
+        font-weight: 600;
+        color: #555;
+        padding-bottom: 30px; 
+    }
+
+    /* References Section */
+    .references-section p {
+        margin-bottom: 0.5em;
+        font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop has-text-centered">
+      
+      <h1 class="title is-1 publication-title">
+        Curvature Enthusiasm: <br>
+        <span class="is-size-2">Correspondence-Free Interpolation and Matching of Articulated 3D Shapes using Compressed Normal Cycles</span>
+      </h1>
+
+      <div class="publication-authors">
+        <span class="author-block">
+          <a href="https://researchportal.bath.ac.uk/en/persons/adam-hartshorne/">Adam Hartshorne</a><sup>1</sup>,
+        </span>
+        <span class="author-block">
+          <a href="https://researchportal.bath.ac.uk/en/persons/allen-paul/">Allen Paul</a><sup>1</sup>,
+        </span>
+        <span class="author-block">
+          <a href="https://people.bath.ac.uk/tjs42/">Tony Shardlow</a><sup>1</sup>,
+        </span>
+        <span class="author-block">
+          <a href="https://www.ndfcampbell.org/">Neill D. F. Campbell</a><sup>2,1</sup>
+        </span>
+      </div>
+
+      <div class="is-size-6 publication-authors">
+        <span class="institution"><sup>1</sup> University of Bath, UK &nbsp;&nbsp;&nbsp; <sup>2</sup> University College London, UK</span>
+      </div>
+
+      <div class="publication-venue">
+        In SIGGRAPH Asia 2025 (ACM Transactions on Graphics)
+      </div>
+
+      <div class="publication-links">
+        <span class="link-block" style="display: inline-block; vertical-align: top; text-align: center;">
+          <a href="https://1drv.ms/b/c/acb4f0da235b5b9c/EWLwoIELxOxPhLg0VYoLceMBfhMC3hNZ8_NnVWCPFa9wbQ?e=SneR43" class="button is-black is-rounded">
+            <span class="icon"><i class="fas fa-file-pdf"></i></span>
+            <span>Paper (High Res)</span>
+          </a>
+          <br>
+          <span style="font-size: 1.0rem; font-weight: bold; display: block; margin-top: -3px; color: #555;">~150MB</span>
+          <span style="font-size: 0.7rem; display: block; margin-top: -2px; color: #777;">(Right Click, Save As)</span>
+        </span>
+        <span class="link-block" style="display: inline-block; vertical-align: top; text-align: center;">
+          <a href="static/pdfs/Siggraph_Asia_2025_Curvature_Enthusiasm__Camera_Ready__compressed.pdf" class="button is-black is-rounded">
+            <span class="icon"><i class="fas fa-file-pdf"></i></span>
+            <span>Paper (Low Res)</span>
+          </a>
+          <br>
+          <span style="font-size: 1.0rem; font-weight: bold; display: block; margin-top: -3px; color: #555;">~2MB</span>
+        </span>
+        <span class="link-block" style="display: inline-block; vertical-align: top;">
+          <a href="#" class="button is-black is-rounded">
+            <span class="icon"><i class="fas fa-file-powerpoint"></i></span>
+            <span>Slides (Coming Soon)</span>
+          </a>
+        </span>
+        <span class="link-block" style="display: inline-block; vertical-align: top;">
+          <a href="https://github.com/neural-geometric-shape-models/curvature-enthusiasm" class="button is-black is-rounded">
+            <span class="icon"><i class="fab fa-github"></i></span>
+            <span>Code</span>
+          </a>
+        </span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section compact-section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full">
+        <video poster="./static/images/sizzle_image.png" id="teaser" autoplay muted loop playsinline controls height="100%">
+          <source src="./static/videos/SA2025-FastForward.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section compact-section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 section-title has-text-centered">Abstract</h2>
+        <div class="content has-text-justified abstract-container">
+          <p>
+            We present an unsupervised framework for physically plausible shape interpolation and dense correspondence estimation between 3D articulated shapes. Our approach intentionally focuses upon pose variation within the same identity, which we believe is a meaningful and challenging problem in its own right. Our method uses Neural Ordinary Differential Equations (NODEs) to generate smooth flow fields that define diffeomorphic transformations, ensuring topological consistency and preventing self-intersections while accommodating hard constraints, such as volume preservation.
+          </p>
+          <p>
+            By incorporating a lightweight skeletal structure, we impose kinematic constraints that resolve symmetries without requiring manual skinning or predefined poses. We enhance physical realism by interpolating skeletal motion with dual quaternions and applying constrained optimization to align the flow field with the skeleton, preserving local rigidity. Additionally, we employ an efficient formulation of Normal Cycles, a metric from geometric measure theory, to capture higher-order surface details like curvature, enabling precise alignment between complex articulated structures and recovering accurate dense correspondence mapping.
+          </p>
+          <p>
+            Evaluations on multiple benchmarks show notable improvements over state-of-the-art methods in both interpolation quality and correspondence accuracy, with consistent performance across different skeletal configurations, demonstrating broad applicability to shape matching and animation tasks.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title has-text-centered">Contributions</h2>
+
+    <div class="content-block">
+        <div class="columns is-centered">
+            <div class="column is-full">
+                <div class="has-text-centered">
+                    <div class="img-placeholder" id="teaser-placeholder" style="display:none;">
+                        <div style="text-align:center;">
+                            <i class="fas fa-image fa-3x mb-3"></i><br>
+                            <strong>Teaser Image</strong><br>
+                            Shows comparison between "Unnatural Intermediate Poses" (Top) and "Physically Plausible Poses" (Bottom).
+                        </div>
+                    </div>
+                    <img src="./static/images/sizzle_image.png" onerror="this.style.display='none'; document.getElementById('teaser-placeholder').style.display='flex';" class="teaser-image" alt="Teaser Image">
+                </div>
+                <div class="content has-text-justified" style="margin-top: 1rem;">
+                    <p>
+                      We propose 3 key innovations over the current state-of-the-art approach, ARC-Flow (top row), that lead to more physically plausible interpolations and higher quality recovery of dense correspondence. Left: 3D Shape Interpolation. The kinematics of the articulated skeleton are modelled using Dual Quaternions leading to pose interpolation using SCLERP (vs SLERP) Centre: Improved Surface Matching. Normal Cycles are more effective in accurately modelling high curvature areas compared to Varifolds Right: Exact Skeleton-Driven Transformation. The benefit of constrained optimisation (MDMM vs soft constraints) is demonstrated on a sequence from the MANO dataset; it ensures the flow driven deformation exactly matches the rigid skeletal deformation.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</section>
+
+<section class="section has-background-light">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title has-text-centered">Experimental Results</h2>
+
+    <h3 class="title is-4">Quantitative Results</h3>
+    <div class="content has-text-centered mb-5">
+      <p></p>
+    </div>
+    
+    <div class="columns is-centered">
+      <div class="column is-10">
+        <div class="content has-text-justified" style="margin-bottom: 1rem;">
+            <p>
+              Our method outperforms state-of-the-art approaches (<a href="#ref-arcflow">ARC-Flow</a>, <a href="#ref-sms">SMS</a>, <a href="#ref-esa">ESA</a>) across Geodesic Distance, Chamfer Distance, and Quasi-Conformal Distortion metrics on <strong><a href="#ref-dfaust">DFAUST</a></strong> (Humans), <strong><a href="#ref-mano">MANO</a></strong> (Hands), and <strong><a href="#ref-smal">SMAL</a></strong> (Animals) datasets.
+            </p>
+        </div>
+        
+        <div class="has-text-centered" style="margin-bottom: 2rem;">
+            <div class="img-placeholder" id="quant-placeholder" style="display:none;">
+                 <i class="fas fa-chart-bar fa-3x"></i><br>
+                 <strong>Quantitative Results</strong><br>
+                 (e.g., Bar Charts for Geodesic, Chamfer, Conformal metrics)
+            </div>
+            <img src="./static/images/quantitative_results.png" onerror="this.style.display='none'; document.getElementById('quant-placeholder').style.display='flex';" class="teaser-image" alt="Quantitative Results">
+        </div>
+
+        <div class="content has-text-justified" style="margin-bottom: 1rem; margin-top: 2rem;">
+            <p>
+              Interpolation results on DFAUST dataset with our method using <a href="#ref-smpl">SMPL</a> & <a href="#ref-skel">SKEL</a> skeletons vs ARC-Flow using SMPL. Mean and confidence intervals for the three metrics are shown; our method improves across all metrics irrespective of the skeleton and also has narrower error bars indicating more consistent performance than ARC-Flow.
+            </p>
+        </div>
+        <div class="has-text-centered">
+            <div class="img-placeholder" id="quant-placeholder-2" style="display:none;">
+                 <i class="fas fa-chart-line fa-3x"></i><br>
+                 <strong>Skeleton Comparison</strong><br>
+                 Comparison of SMPL vs SKEL skeletons
+            </div>
+            <img src="./static/images/dfaust_smpl_vs_skel_sota.png" onerror="this.style.display='none'; document.getElementById('quant-placeholder-2').style.display='flex';" class="teaser-image" alt="SMPL vs SKEL Comparison">
+        </div>
+      </div>
+    </div>
+
+    <h3 class="title is-4">Qualitative Results</h3>
+    
+    <div id="results-carousel" class="carousel results-carousel">
+      <div class="item">
+        <div class="img-placeholder" id="carousel-1-placeholder" style="display:none;">
+             <i class="fas fa-child fa-3x"></i><br><br>
+             <strong>Human Interpolation</strong>
+        </div>
+        <img src="./static/images/kid_checkerboard.png" onerror="this.style.display='none'; document.getElementById('carousel-1-placeholder').style.display='flex';" alt="Human Interpolation">
+        <div class="carousel-item-caption">Qualitative comparison on TOPKIDS dataset</div>
+      </div>
+
+      <div class="item">
+        <div class="img-placeholder" id="carousel-2-placeholder" style="display:none;">
+             <i class="fas fa-th fa-3x"></i><br><br>
+             <strong>General Selection</strong>
+        </div>
+        <img src="./static/images/general_selection_of_results.png" onerror="this.style.display='none'; document.getElementById('carousel-2-placeholder').style.display='flex';" alt="General Selection of Results">
+        <div class="carousel-item-caption">General selection of results across different datasets</div>
+      </div>
+
+      <div class="item">
+        <div class="img-placeholder" id="carousel-3-placeholder" style="display:none;">
+             <i class="fas fa-bone fa-3x"></i><br><br>
+             <strong>Manual Skeleton (TOSCA)</strong>
+        </div>
+        <img src="./static/images/manual_skeleton_tosca_results.png" onerror="this.style.display='none'; document.getElementById('carousel-3-placeholder').style.display='flex';" alt="Manual Skeleton Results">
+        <div class="carousel-item-caption">Results using manually defined skeletons (TOSCA)</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 1.5rem;"></div>
+
+    <div id="video-carousel" class="carousel results-carousel">
+      
+      <div class="item">
+        <video poster="./static/videos/mano_placeholder.png" id="video1" autoplay controls muted loop playsinline height="100%">
+          <source src="./static/videos/mano_animation.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <div class="carousel-item-caption">
+            Predicted Interpolation between two MANO poses
+        </div>
+      </div>
+      <div class="item">
+        <video poster="./static/videos/smal_placeholder.png" id="video1" autoplay controls muted loop playsinline height="100%">
+          <source src="./static/videos/smal_animation.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <div class="carousel-item-caption">
+            Predicted Interpolation between two SMAL poses
+        </div>
+      </div>
+            <div class="item">
+        <video poster="./static/videos/tosca_dog_placeholder.png" id="video1" autoplay controls muted loop playsinline height="100%">
+          <source src="./static/videos/tosca_dog_animation.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <div class="carousel-item-caption">
+            Predicted Interpolation between two TOSCA Dog poses
+        </div>
+      </div>
+            <div class="item">
+        <video poster="./static/videos/tosca_centaur_placeholder.png" id="video1" autoplay controls muted loop playsinline height="100%">
+          <source src="./static/videos/tosca_centaur_animation.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <div class="carousel-item-caption">
+            Predicted Interpolation between two TOSCA Centaur poses
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section" id="references">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title has-text-centered">Related Work & References</h2>
+    <div class="content has-text-justified references-section">
+      <p id="ref-arcflow">
+        [1] <strong>ARC-Flow:</strong> Adam Hartshorne, Allen Paul, Tony Shardlow, and Neill D.F. Campbell. "ARC-Flow: Articulated, Resolution-Agnostic, Correspondence-Free Matching and Interpolation of 3D Shapes Under Flow Fields". <em>3DV 2025</em>.
+      </p>
+      <p id="ref-sms">
+        [2] <strong>SMS:</strong> Dongliang Cao, Marvin Eisenberger, Nafie El Amrani, Daniel Cremers, and Florian Bernard. "Spectral Meets Spatial: Harmonising 3D Shape Matching and Interpolation". <em>CVPR 2024</em>.
+      </p>
+      <p id="ref-esa">
+        [3] <strong>ESA:</strong> Emmanuel Hartman, Yashil Sukurdeep, Eric Klassen, Nicolas Charon, and Martin Bauer. "Elastic shape analysis of surfaces with second-order sobolev metrics: a comprehensive numerical framework". <em>IJCV 2023</em>.
+      </p>
+      <p id="ref-smpl">
+        [5] <strong>SMPL:</strong> Matthew Loper, Naureen Mahmood, Javier Romero, Gerard Pons-Moll, and Michael J. Black. "SMPL: A Skinned Multi-Person Linear Model". <em>SIGGRAPH Asia 2015</em>.
+      </p>
+      <p id="ref-mano">
+        [6] <strong>MANO:</strong> Javier Romero, Dimitris Tzionas, and Michael J. Black. "Embodied Hands: Modeling and Capturing Hands and Bodies Together". <em>SIGGRAPH Asia 2017</em>.
+      </p>
+      <p id="ref-smal">
+        [7] <strong>SMAL:</strong> Silvia Zuffi, Angjoo Kanazawa, David W. Jacobs, and Michael J. Black. "3D Menagerie: Modeling the 3D Shape and Pose of Animals". <em>CVPR 2017</em>.
+      </p>
+      <p id="ref-skel">
+        [8] <strong>SKEL:</strong> Marilyn Keller, Keenon Werling, Soyong Shin, Scott Delp, Sergi Pujades, C. Karen Liu, and Michael J. Black. "From skin to skeleton: Towards biomechanically accurate 3d digital humans". <em>SIGGRAPH 2023</em>.
+      </p>
+      <p id="ref-dfaust">
+        [9] <strong>DFAUST:</strong> Federica Bogo, Javier Romero, Gerard Pons-Moll, and Michael J. Black. "Dynamic FAUST: Registering human bodies in motion". <em>CVPR 2017</em>.
+      </p>
+      <p id="ref-topkids">
+        [10] <strong>TOPKIDS:</strong> Zorah Lähner, Emanuele Rodolà, Michael M. Bronstein, Daniel Cremers, et al. "SHREC’16: Matching of deformable shapes with topological noise". <em>Eurographics Workshop on 3D Object Retrieval 2016</em>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title has-text-centered">Acknowledgments</h2>
+    <div class="content has-text-justified">
+      <p>
+        We thank Michelle Wu and Marting Parsons for help in rendering figures and video production. This work was supported by the EPSRC SAMBa Centre for Doctoral Training in Statistical Applied Mathematics (EP/L015684/1), the EPSRC CAMERA Research Centre (EP/M023281/1 and EP/T022523/1), UKRI Strength in Places Fund MyWorld Project (SIPF00006/1) and the Royal Society.
+      </p>
+    </div>
+    
+    <div class="columns is-centered is-vcentered" style="margin-top: 2rem;">
+      <div class="column is-2 has-text-centered">
+        <img src="./static/images/Royal_Society_logo.png" alt="RoyalSociety" style="max-height: 80px; vertical-align: middle;">
+      </div>
+      <div class="column is-2 has-text-centered">
+        <img src="./static/images/SAMBa-logo.png" alt="SAMBa" style="max-height: 80px; vertical-align: middle;">
+      </div>
+      <div class="column is-2 has-text-centered">
+        <img src="./static/images/myworld-logo.png" alt="MyWorld" style="max-height: 80px; vertical-align: middle;">
+      </div>
+      <div class="column is-2 has-text-centered">
+        <img src="./static/images/camera-logo.png" alt="CAMERA" style="max-height: 80px; vertical-align: middle;">
+      </div>
+       <div class="column is-2 has-text-centered">
+        <img src="./static/images/bath-logo.png" alt="UoB" style="max-height: 80px; vertical-align: middle;">
+      </div>
+       <div class="column is-2 has-text-centered">
+        <img src="./static/images/orange-ucl-logo.png" alt="UCL" style="max-height: 80px; vertical-align: middle;">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 section-title">BibTeX</h2>
+    <div class="bibtex-section">
+<pre><code>@article{Hartshorne2025Curvature,
+  author    = {Hartshorne, Adam and Paul, Allen and Shardlow, Tony and Campbell, Neill D. F.},
+  title     = {Curvature Enthusiasm: Correspondence-Free Interpolation and Matching of Articulated 3D Shapes using Compressed Normal Cycles},
+  journal   = {ACM Transactions on Graphics (SIGGRAPH Asia)},
+  volume    = {44},
+  number    = {6},
+  year      = {2025},
+  publisher = {ACM}
+}</code></pre>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="#">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/curvature-enthusiasm" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="content has-text-centered">
+      <p>
+        This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+        <br>
+        Source code based on <a href="https://nerfies.github.io/">Nerfies</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.3/dist/js/bulma-carousel.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        // 1. Initialize Image Carousel (Autoplays)
+        bulmaCarousel.attach('#results-carousel', {
+            slidesToScroll: 1,
+            slidesToShow: 1,
+            infinite: true,
+            autoplay: false, // Images flow automatically
+            autoplaySpeed: 3000,
+            pagination: true,
+            navigation: true,
+            loop: true
+        });
+
+        // 2. Initialize Video Carousel (No Autoplay, Smart Video Handling)
+        var videoCarousels = bulmaCarousel.attach('#video-carousel', {
+            slidesToScroll: 1,
+            slidesToShow: 1,
+            infinite: true,
+            autoplay: false, // Turn OFF autoplay so video doesn't slide away while watching
+            pagination: true,
+            navigation: true,
+            loop: true
+        });
+
+        // --- Video Smart Playback Logic ---
+        
+        // Access the instance of the video carousel
+        // Note: bulmaCarousel.attach returns an array.
+        var videoCarousel = videoCarousels[0];
+
+        function updateVideoPlayback() {
+            // A. Pause ALL videos in the video carousel
+            document.querySelectorAll('#video-carousel video').forEach(vid => {
+                vid.pause();
+                // Optional: Reset time if you want them to start from 0 every time
+                // vid.currentTime = 0; 
+            });
+
+            // B. Find the currently active slide in the video carousel
+            var activeSlide = document.querySelector('#video-carousel .item.is-active');
+
+            // C. Play only the video in the active slide
+            if (activeSlide) {
+                var activeVideo = activeSlide.querySelector('video');
+                if (activeVideo) {
+                    // Try to play (browsers require muted=true for this to work reliably)
+                    activeVideo.play().catch(error => {
+                        console.log("Autoplay prevented by browser: ", error);
+                    });
+                }
+            }
+        }
+
+        // Attach the listener: When slide changes, update video playback
+        if (videoCarousel) {
+            videoCarousel.on('bulmaCarousel:show', function() {
+                updateVideoPlayback();
+            });
+            
+            // Trigger once on load to start the first video
+            setTimeout(updateVideoPlayback, 500);
+        }
+    });
+</script>
+
+</body>
 </html>
